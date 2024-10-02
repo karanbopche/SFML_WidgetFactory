@@ -1,0 +1,44 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cmake Generate",
+            "type": "shell",
+            "problemMatcher": [],
+            "command": "cmake -B build -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Debug"
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "problemMatcher": [],
+            "command": "cmake --build build --config Debug --parallel 10",
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "problemMatcher": [],
+            "command": "cmake --build build --target clean"
+        },
+        {
+            "label": "test",
+            "type": "shell",
+            "dependsOn": "build",
+            "problemMatcher": [],
+            "command": "ctest --test-dir build/Tests"
+        },
+        {
+            "label": "test Run",
+            "type": "shell",
+            "problemMatcher": [],
+            "command": "${workspaceFolder}/build/bin/UNIT_TESTS.exe",
+            "args": [
+                "--gtest_also_run_disabled_tests"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build/bin"
+            }
+        }
+    ]
+}
